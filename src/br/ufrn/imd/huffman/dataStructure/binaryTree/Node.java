@@ -58,6 +58,19 @@ public class Node {
     }
 
     public void insert(Node node){
-        //TODO codigo de inserção à direita ou esquerda
+
+        if(node.getCount() < this.getCount()){
+            if(this.left == null){
+                this.left = node;
+            } else {
+                this.left.insert(node);
+            }
+        } else if(node.getCount() > this.getCount()){
+            if(this.right == null){
+                this.right = node;
+            } else {
+                this.right.insert(node);
+            }
+        }
     }
 }
