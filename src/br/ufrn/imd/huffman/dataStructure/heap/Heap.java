@@ -1,5 +1,8 @@
 package br.ufrn.imd.huffman.dataStructure.heap;
 
+
+import br.ufrn.imd.huffman.dataStructure.binaryTree.Node;
+
 public class Heap {
 
     private Node[] minHeap;
@@ -77,10 +80,10 @@ public class Heap {
     }
 
     private void heapifyDown(int index){
-        leftChild = 2*index + 1;
-        rightChild = 2*index + 2;
+        int leftChild = 2*index + 1;
+        int rightChild = 2*index + 2;
 
-        childIndex = -1;
+        int childIndex = -1;
 
         if(leftChild < getSize()) {
             childIndex = leftChild;

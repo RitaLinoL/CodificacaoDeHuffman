@@ -15,19 +15,20 @@ ainda nem comecei
 #### Tack list
 ##### Atividades iniciais e rascunho
 - [x] Leitura do Trabalho
-- [ ] Manipulação de arquivos em Java 
+- [x] Leitura de arquivos em Java
+- [ ] Manipulação de arquivos binários 
 - [ ] Argumentos em linha de comando 
 ###### Codificação de Huffman (passos):
-- [ ] Contar frequência de utilização de caracteres
+- [x] Contar frequência de utilização de caracteres
 - [ ] Criar um árvore de Codificação
 - [ ] Criar uma tabela de Codificação
 - [ ] Codificar o texto
 
 
 ##### Implementação 
-- [ ] Heap  
+- [x] Heap  
 - [ ] Tree 
-- [ ] Node
+- [x] Node
 - [ ] Compressor
 - [ ] Extractor
 
