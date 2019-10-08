@@ -9,9 +9,6 @@ package br.ufrn.imd.huffman.dataStructure.binaryTree;
 public class Node {
     private Integer letter;
     private Integer count;
-
-
-
     private Node left;
     private Node right;
 
