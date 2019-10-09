@@ -1,5 +1,8 @@
 package br.ufrn.imd.huffman.entities;
 
+import br.ufrn.imd.huffman.dataStructure.binaryTree.Node;
+import br.ufrn.imd.huffman.dataStructure.heap.Heap;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -44,5 +47,22 @@ public class Compressor {
         }
 
         return map;
+    }
+
+    //recebe um mapa para transformar os seus caracteres armazenados em nós
+    //retorna uma minHeap com os nós adicionados
+    public Heap turnLettersInNodes(HashMap<String, Integer> map){
+        Heap minHeap = new Heap(map.size());
+
+        for (String x : map.keySet()) {
+            Integer aux = Integer.parseInt(x); //Na classe node, letter é do tipo Integer, entao precisamos converter a string do mapa para inteiro
+
+            Node node = new Node(aux);
+            node.setCount(map.get(x));
+
+            minHeap.addNode(node);
+        }
+
+        return minHeap;
     }
 }

@@ -20,6 +20,7 @@ ainda nem comecei
 - [ ] Argumentos em linha de comando 
 ###### Codificação de Huffman (passos):
 - [x] Contar frequência de utilização de caracteres
+- [ ] Transformar os caracteres em nós e adicioná-los na heap
 - [ ] Criar um árvore de Codificação
 - [ ] Criar uma tabela de Codificação
 - [ ] Codificar o texto

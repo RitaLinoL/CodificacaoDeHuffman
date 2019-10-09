@@ -52,6 +52,8 @@ public class Node {
     public void setRight(Integer letter){
         this.right = new Node(letter);
     }
+    public void setLetter(Integer letter) {this.letter = letter;}
+    public void setCount(Integer count){this.count = count;}
 
     public void addCount(){
         this.count ++;
