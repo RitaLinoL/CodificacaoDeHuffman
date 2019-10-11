@@ -93,4 +93,8 @@ public class Node {
             root.right.accessPreOrder(root.right);
         }
     }
+
+    public boolean isLeaf(){
+        return this.left == null && this.right == null;
+    }
 }

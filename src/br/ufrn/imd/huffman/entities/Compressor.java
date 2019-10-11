@@ -83,4 +83,8 @@ public class Compressor {
 
         return minHeap.peek();
     }
+
+    public void buildCodeTable(Node root){
+
+    }
 }
