@@ -7,14 +7,14 @@ package br.ufrn.imd.huffman.dataStructure.binaryTree;
  * */
 
 public class Node {
-    private Integer letter;
-    private Integer count;
+    private int letter;
+    private int count;
     private Node left;
     private Node right;
 
     public Node(){
-        this.letter = null;
-        this.count = null;
+        this.letter = 0;
+        this.count = 0;
         this.left = null;
         this.right = null;
     }
@@ -24,11 +24,11 @@ public class Node {
         this.count = 1;
     }
 
-    public Integer getLetter() {
+    public int getLetter() {
         return letter;
     }
 
-    public Integer getCount() {
+    public int getCount() {
         return count;
     }
 
@@ -74,5 +74,10 @@ public class Node {
                 this.right.insert(node);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "letter: " + (char)this.getLetter() + " count: " + this.getCount();
     }
 }

@@ -15,6 +15,7 @@ public class Compressor {
     public Compressor(String path){
         this.pathFile = path;
     }
+
     public HashMap<String, Integer> countLetter(){
         HashMap<String, Integer> map = new HashMap();
 
@@ -25,7 +26,7 @@ public class Compressor {
                 String line = (String) br.readLine();
                 for (char letter: line.toCharArray()){
                     String l =""+letter;
-                    System.out.println(l);
+
                     if (map.containsKey(l)){
                         map.put(l, map.get(l)+1);
                     }else{
@@ -35,10 +36,6 @@ public class Compressor {
             }
             br.close();
             fr.close();
-
-            for (String x: map.keySet()){
-                System.out.println(x+ " - " + map.get(x));
-            }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -55,7 +52,7 @@ public class Compressor {
         Heap minHeap = new Heap(map.size());
 
         for (String x : map.keySet()) {
-            Integer aux = Integer.parseInt(x); //Na classe node, letter é do tipo Integer, entao precisamos converter a string do mapa para inteiro
+            int aux = x.charAt(0);
 
             Node node = new Node(aux);
             node.setCount(map.get(x));
@@ -65,4 +62,6 @@ public class Compressor {
 
         return minHeap;
     }
+
+
 }
