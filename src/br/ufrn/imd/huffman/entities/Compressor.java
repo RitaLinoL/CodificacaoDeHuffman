@@ -17,7 +17,7 @@ public class Compressor {
     }
 
     public HashMap<String, Integer> countLetter(){
-        HashMap<String, Integer> map = new HashMap();
+        HashMap<String, Integer> map = new HashMap<>();
 
         try {
             FileReader fr = new FileReader(this.pathFile);
@@ -63,5 +63,24 @@ public class Compressor {
         return minHeap;
     }
 
+    //funcao para gerar uma arvore a partir da minHeap
+    //retorna um nó, o último que sobra na minHeap
+    public Node buildTreeCode(Heap minHeap){
+        while(minHeap.getSize() > 1){
+            Node a = minHeap.peek();
+            minHeap.remove();
 
+            Node b = minHeap.peek();
+            minHeap.remove();
+
+            Node father = new Node('!'); //coloquei um caracter qualquer pra representar, mas pode ser outro
+            father.setCount(a.getCount() + b.getCount());
+            father.setLeft(a);
+            father.setRight(b);
+
+            minHeap.addNode(father);
+        }
+
+        return minHeap.peek();
+    }
 }

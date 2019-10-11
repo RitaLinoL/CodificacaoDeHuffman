@@ -19,7 +19,7 @@ public class Node {
         this.right = null;
     }
 
-    public Node(Integer letter){
+    public Node(int letter){
         this.letter = letter;
         this.count = 1;
     }
@@ -46,14 +46,14 @@ public class Node {
     public void setRight(Node node){
         this.right = node;
     }
-    public void setLeft(Integer letter){
+    public void setLeft(int letter){
         this.left = new Node(letter);
     }
-    public void setRight(Integer letter){
+    public void setRight(int letter){
         this.right = new Node(letter);
     }
-    public void setLetter(Integer letter) {this.letter = letter;}
-    public void setCount(Integer count){this.count = count;}
+    public void setLetter(int letter) {this.letter = letter;}
+    public void setCount(int count){this.count = count;}
 
     public void addCount(){
         this.count ++;
@@ -79,5 +79,18 @@ public class Node {
     @Override
     public String toString() {
         return "letter: " + (char)this.getLetter() + " count: " + this.getCount();
+    }
+
+    public void accessPreOrder(Node root){
+
+        System.out.print(root.getCount() + " ");
+
+        if(root.left != null){
+            root.left.accessPreOrder(root.left);
+        }
+
+        if(root.right != null){
+            root.right.accessPreOrder(root.right);
+        }
     }
 }

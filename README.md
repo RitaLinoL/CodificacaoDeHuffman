@@ -21,9 +21,10 @@ ainda nem comecei
 ###### Codificação de Huffman (passos):
 - [x] Contar frequência de utilização de caracteres
 - [x] Transformar os caracteres em nós e adicioná-los na heap
-- [ ] Criar um árvore de Codificação
+- [x] Criar um árvore de Codificação
 - [ ] Criar uma tabela de Codificação
 - [ ] Codificar o texto
+- [ ] Decodificar o texto
 
 
 ##### Implementação 

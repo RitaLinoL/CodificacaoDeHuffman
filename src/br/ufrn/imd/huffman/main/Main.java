@@ -2,6 +2,7 @@ package br.ufrn.imd.huffman.main;
 
 
 import br.ufrn.imd.huffman.dataStructure.binaryTree.Node;
+import br.ufrn.imd.huffman.dataStructure.binaryTree.Tree;
 import br.ufrn.imd.huffman.dataStructure.heap.Heap;
 import br.ufrn.imd.huffman.entities.Compressor;
 
@@ -22,8 +23,13 @@ public class Main {
         //testando a função turnLettersInNode()
         fila = compressor.turnLettersInNodes(mapa);
 
-        for (Node n : fila.getMinHeap()) {
-            System.out.println(((char)n.getLetter()) + " - " + n.getCount());
-        }
+        //testando a função buildTreeCode
+        Tree arvore = new Tree(compressor.buildTreeCode(fila));
+
+        arvore.getRoot().accessPreOrder(arvore.getRoot());
+
+//        for (Node n : fila.getMinHeap()) {
+//            System.out.println(((char)n.getLetter()) + " - " + n.getCount());
+//        }
     }
 }
