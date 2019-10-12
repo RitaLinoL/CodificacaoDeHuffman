@@ -31,12 +31,17 @@ public class Main {
         //testando a função buildCodeTable
         String tabela[] = compressor.buildCodeTable(arvore.getRoot());
 
-        for (String x : tabela) {
-            if(x != null){
-                System.out.println(x);
-            }
+//        for (String x : tabela) {
+//            if(x != null){
+//                System.out.println(x);
+//            }
+//
+//        }
 
+        //testando a funçao getCodeMap
+        HashMap<String, String> mapaDeCodigo = compressor.getCodeMap(tabela);
+        for (String x : mapaDeCodigo.keySet()) {
+            System.out.println(x + mapaDeCodigo.get(x));
         }
-
     }
 }
