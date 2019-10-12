@@ -84,7 +84,20 @@ public class Compressor {
         return minHeap.peek();
     }
 
-    public void buildCodeTable(Node root){
+    //método que gera e retorna um vetor de strings com os códigos
+    public String[] buildCodeTable(Node root){
+        String codeTable[] = new String[256]; //tamanho de 256 pq é o limite da tabela ascii, mas desperdiça um pouco de memória
+        buildCode(codeTable, root, "");
+        return codeTable;
+    }
 
+    //método auxiliar pra gerar os códigos
+    private void buildCode(String table[], Node node, String s){
+        if(node.isLeaf()){
+            table[node.getLetter()] = (char)node.getLetter() + s;
+            return;
+        }
+        buildCode(table, node.getLeft(), s + '0');
+        buildCode(table, node.getRight(), s + '1');
     }
 }

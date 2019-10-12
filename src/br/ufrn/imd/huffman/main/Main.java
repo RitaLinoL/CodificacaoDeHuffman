@@ -26,10 +26,17 @@ public class Main {
         //testando a função buildTreeCode
         Tree arvore = new Tree(compressor.buildTreeCode(fila));
 
-        arvore.getRoot().accessPreOrder(arvore.getRoot());
+        //arvore.getRoot().accessPreOrder(arvore.getRoot());
 
-//        for (Node n : fila.getMinHeap()) {
-//            System.out.println(((char)n.getLetter()) + " - " + n.getCount());
-//        }
+        //testando a função buildCodeTable
+        String tabela[] = compressor.buildCodeTable(arvore.getRoot());
+
+        for (String x : tabela) {
+            if(x != null){
+                System.out.println(x);
+            }
+
+        }
+
     }
 }
