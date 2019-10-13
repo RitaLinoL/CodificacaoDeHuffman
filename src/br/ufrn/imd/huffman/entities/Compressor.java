@@ -22,17 +22,18 @@ public class Compressor {
         try {
             FileReader fr = new FileReader(this.pathFile);
             BufferedReader br = new BufferedReader(fr);
+            map.put("\n", 0);
             while (br.ready()) {
                 String line = (String) br.readLine();
                 for (char letter: line.toCharArray()){
                     String l =""+letter;
-
                     if (map.containsKey(l)){
                         map.put(l, map.get(l)+1);
                     }else{
                         map.put(l, 1);
                     }
                 }
+                map.put("\n", map.get("\n") +1);
             }
             br.close();
             fr.close();
@@ -50,13 +51,11 @@ public class Compressor {
     //retorna uma minHeap com os nós adicionados
     public Heap turnLettersInNodes(HashMap<String, Integer> map){
         Heap minHeap = new Heap(map.size());
-
         for (String x : map.keySet()) {
-            int aux = x.charAt(0);
+            int aux = x.charAt(0);//transformo de caracter para um valor na tabela ascii
 
             Node node = new Node(aux);
             node.setCount(map.get(x));
-
             minHeap.addNode(node);
         }
 

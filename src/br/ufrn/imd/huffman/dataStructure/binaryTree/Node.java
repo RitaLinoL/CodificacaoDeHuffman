@@ -60,7 +60,7 @@ public class Node {
     }
 
     public void insert(Node node){
-
+        //FIXME mudar método de inserção:primeiro esquerda depois direita
         if(node.getCount() < this.getCount()){
             if(this.left == null){
                 this.left = node;
