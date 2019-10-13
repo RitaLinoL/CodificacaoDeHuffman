@@ -83,7 +83,39 @@ public class Compressor {
         return minHeap.peek();
     }
 
-    public void buildCodeTable(Node root){
-
+    //método que gera e retorna um vetor de strings com os códigos
+    public String[] buildCodeTable(Node root){
+        String codeTable[] = new String[256]; //tamanho de 256 pq é o limite da tabela ascii, mas desperdiça um pouco de memória
+        buildCode(codeTable, root, "");
+        return codeTable;
     }
+
+    //método auxiliar pra gerar os códigos
+    private void buildCode(String table[], Node node, String s){
+        if(node.isLeaf()){
+            table[node.getLetter()] = (char)node.getLetter() + " " + s;
+            return;
+        }
+        buildCode(table, node.getLeft(), s + '0');
+        buildCode(table, node.getRight(), s + '1');
+    }
+
+    //retorna uma mapa com os valores letter e código do letter
+    //OBS: esse método foi criado por orientação do professor no arquivo PDF, página 6, segundo parágrafo
+    //OBS2: o método buildCodeTable funciona da mesma forma, mas esse deve ser mais conveniente pra gente
+    public HashMap<String, String> getCodeMap(String tabela[]){
+        HashMap<String, String> map = new HashMap<>();
+        for (String s : tabela) {
+            if(s != null){
+                String aux[];
+                aux = s.split(" ", 2);
+                map.put(aux[0], aux[1]);
+            }
+        }
+
+        return map;
+    }
+
+    //TODO aprender como escrever num arquivo; criar um método pra escrever a tabela de códigos num arquivo.
+
 }
