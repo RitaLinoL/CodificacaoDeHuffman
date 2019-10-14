@@ -23,10 +23,6 @@ public class Main {
         //testando a função turnLettersInNode()
         fila = compressor.turnLettersInNodes(mapa);
 
-        for (Node x: fila.getMinHeap()){
-            System.out.println(x.getLetter() + " - " + x.getCount());
-        }
-
         //testando a função buildTreeCode
         Tree arvore = new Tree(compressor.buildTreeCode(fila));
 
