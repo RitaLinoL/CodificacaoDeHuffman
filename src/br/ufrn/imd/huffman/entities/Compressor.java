@@ -3,10 +3,7 @@ package br.ufrn.imd.huffman.entities;
 import br.ufrn.imd.huffman.dataStructure.binaryTree.Node;
 import br.ufrn.imd.huffman.dataStructure.heap.Heap;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 
 public class Compressor {
@@ -117,6 +114,18 @@ public class Compressor {
         return map;
     }
 
-    //TODO aprender como escrever num arquivo; criar um método pra escrever a tabela de códigos num arquivo.
+    //método para armazenar a tabela de códigos num arquivo
+    public void storeCodeTable(String pathFile, HashMap<String, String> map) throws IOException {
+        FileWriter arquivo = new FileWriter(pathFile);
+        PrintWriter salvarEmArquivo = new PrintWriter(arquivo);
 
+        for (String x : map.keySet()) {
+            salvarEmArquivo.println(x + map.get(x));
+        }
+
+        arquivo.close();
+    }
+
+    //TODO função para gerar um arquivo binário com a sequencia de bits do texto codificado de um arquivo de texto
+    
 }

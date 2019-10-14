@@ -13,9 +13,10 @@ import java.util.Map;
 public class Main {
     //TODO implementar ordem de execução
 
-    public static void main(String args []) {
+    public static void main(String args []) throws IOException {
 
         String pathFile = "C:/Users/Lucimar/IdeaProjects/CodificacaoDeHuffman/teste.txt";
+        String pathFile2 = "C:/Users/Lucimar/IdeaProjects/CodificacaoDeHuffman/tabelaDeSimbolos.edt";
         Compressor compressor = new Compressor(pathFile);
         HashMap<String, Integer> mapa = compressor.countLetter();
         Heap fila = new Heap(mapa.size());
@@ -31,6 +32,7 @@ public class Main {
         //testando a função buildCodeTable
         String tabela[] = compressor.buildCodeTable(arvore.getRoot());
 
+        //esse laço aqui tbm mostra os caracteres e seu código, porém usando um vetor de strings
 //        for (String x : tabela) {
 //            if(x != null){
 //                System.out.println(x);
@@ -43,5 +45,8 @@ public class Main {
         for (String x : mapaDeCodigo.keySet()) {
             System.out.println(x + mapaDeCodigo.get(x));
         }
+
+        //testando a função storeCodeTable
+        compressor.storeCodeTable(pathFile2, mapaDeCodigo);
     }
 }
