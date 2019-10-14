@@ -23,6 +23,10 @@ public class Main {
         //testando a função turnLettersInNode()
         fila = compressor.turnLettersInNodes(mapa);
 
+        for (Node x: fila.getMinHeap()){
+            System.out.println(x.getLetter() + " - " + x.getCount());
+        }
+
         //testando a função buildTreeCode
         Tree arvore = new Tree(compressor.buildTreeCode(fila));
 
@@ -39,9 +43,10 @@ public class Main {
 //        }
 
         //testando a funçao getCodeMap
+        /*
         HashMap<String, String> mapaDeCodigo = compressor.getCodeMap(tabela);
         for (String x : mapaDeCodigo.keySet()) {
             System.out.println(x + mapaDeCodigo.get(x));
-        }
+        }*/
     }
 }
