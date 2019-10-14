@@ -125,6 +125,37 @@ public class Compressor {
         arquivo.close();
     }
 
-    //TODO função para gerar um arquivo binário com a sequencia de bits do texto codificado de um arquivo de texto
-    
+    //função para gerar um arquivo binário com a sequencia de bits do texto codificado de um arquivo de texto
+    //OBS: não foi usado a classe BitSet que o professor recomendou, então possivelmente podem existir erros nessa função
+    //OBS2: tbm não foi usado o EOF que o professor recomenda colocar, então pode ser que tenha erros
+    public void storeCodeTextInFile(String inputFile, String outputFile, HashMap<String, String> map) throws IOException {
+        //abre o arquivo de entrada, que contém os dados a serem lidos
+        FileReader frInputFile = new FileReader(inputFile);
+        BufferedReader brInputFile = new BufferedReader(frInputFile);
+
+        //abre um arquivo de saída de dados, o qual receberá bits
+        FileOutputStream arquivo = new FileOutputStream(outputFile);
+        DataOutputStream gravarEmArquivo = new DataOutputStream(arquivo);
+
+        while(brInputFile.ready()){
+            String line = brInputFile.readLine();
+            char characters[] = line.toCharArray();//transforma a linha lida do arquivo em um vetor de caracteres
+            //percorre characters. Para cada letra no vetor, percorre o mapa inteiro e, se a letra for igual a uma das chaves do mapa, guarda o código da letra em arquivo binário
+            for (char c : characters) {
+                for (String s : map.keySet()) {
+                    if(c == s.charAt(0)){
+                        gravarEmArquivo.writeUTF(map.get(s));
+                    }
+                }
+            }
+        }
+
+        arquivo.close();
+        frInputFile.close();
+        brInputFile.close();
+    }
+
+    //TODO utilizar todas as funções anteriores para criar uma função Compress, simplificando o uso do programa
+    //OBS: assim que essa função for criada, é interessante alterar a visibilidade das outras para private
+
 }

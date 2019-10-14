@@ -22,14 +22,15 @@ ainda nem comecei
 - [x] Contar frequência de utilização de caracteres
 - [x] Transformar os caracteres em nós e adicioná-los na heap
 - [x] Criar um árvore de Codificação
-- [ ] Criar uma tabela de Codificação
-- [ ] Codificar o texto
+- [x] Criar uma tabela de Codificação
+- [x] Salvar tabela de códigos em arquivo de texto
+- [x] Codificar o texto e salvar em arquivo binario
 - [ ] Decodificar o texto
 
 
 ##### Implementação 
 - [x] Heap  
-- [ ] Tree 
+- [x] Tree 
 - [x] Node
 - [ ] Compressor
 - [ ] Extractor

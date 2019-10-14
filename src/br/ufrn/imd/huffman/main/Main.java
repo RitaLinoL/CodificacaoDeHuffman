@@ -16,6 +16,8 @@ public class Main {
     public static void main(String args []) {
 
         String pathFile = args[1];
+        //String pathFile2 = "C:/Users/Lucimar/IdeaProjects/CodificacaoDeHuffman/tabelaDeSimbolos.edt";
+        //String outputFile = "C:/Users/Lucimar/IdeaProjects/CodificacaoDeHuffman/arquivoComprimido.edz";
         Compressor compressor = new Compressor(pathFile);
         HashMap<String, Integer> mapa = compressor.countLetter();
         Heap fila = new Heap(mapa.size());
@@ -48,5 +50,12 @@ public class Main {
         for (String x : mapaDeCodigo.keySet()) {
             System.out.println(x + mapaDeCodigo.get(x));
         }*/
+
+        //testando a função storeCodeTable
+        //compressor.storeCodeTable(pathFile2, mapaDeCodigo);
+
+        //testando a função storeCodeTextInFile
+        //compressor.storeCodeTextInFile(pathFile, outputFile, mapaDeCodigo);
+
     }
 }
