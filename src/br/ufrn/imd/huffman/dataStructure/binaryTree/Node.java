@@ -97,4 +97,12 @@ public class Node {
     public boolean isLeaf(){
         return this.left == null && this.right == null;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Node)){
+            return false;
+        }
+        return ((Node)obj).getLetter() == this.getLetter() && ((Node) obj).getCount() == this.getCount() && ((Node) obj).getLeft() == this.getLeft()  && ((Node) obj).getRight() == this.getRight() ;
+    }
 }
