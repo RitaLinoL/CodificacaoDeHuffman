@@ -124,7 +124,6 @@ public class Compressor {
         for (String x : map.keySet()) {
             salvarEmArquivo.println(x + map.get(x));
         }
-
         arquivo.close();
     }
 
