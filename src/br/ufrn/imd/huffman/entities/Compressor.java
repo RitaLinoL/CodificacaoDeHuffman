@@ -5,6 +5,7 @@ import br.ufrn.imd.huffman.dataStructure.binaryTree.Tree;
 import br.ufrn.imd.huffman.dataStructure.heap.Heap;
 
 import java.io.*;
+import java.util.BitSet;
 import java.util.HashMap;
 
 public class Compressor {
@@ -16,7 +17,7 @@ public class Compressor {
         this.pathFile = path;
     }
 
-    private HashMap<String, Integer> countLetter(){
+    HashMap<String, Integer> countLetter(){
         HashMap<String, Integer> map = new HashMap<>();
 
         try {
@@ -49,7 +50,7 @@ public class Compressor {
 
     //recebe um mapa para transformar os seus caracteres armazenados em nós
     //retorna uma minHeap com os nós adicionados
-    private Heap turnLettersInNodes(HashMap<String, Integer> map){
+    Heap turnLettersInNodes(HashMap<String, Integer> map){
         Heap minHeap = new Heap(map.size());
         for (String x : map.keySet()) {
             int aux = x.charAt(0);//transformo de caracter para um valor na tabela ascii
@@ -64,7 +65,7 @@ public class Compressor {
 
     //funcao para gerar uma arvore a partir da minHeap
     //retorna um nó, o último que sobra na minHeap
-    private Node buildTreeCode(Heap minHeap){
+    Node buildTreeCode(Heap minHeap){
         while(minHeap.getSize() > 1){
             Node a = minHeap.peek();
             minHeap.remove();
@@ -72,7 +73,7 @@ public class Compressor {
             Node b = minHeap.peek();
             minHeap.remove();
 
-            Node father = new Node('!'); //coloquei um caracter qualquer pra representar, mas pode ser outro
+            Node father = new Node(0); //coloquei um caracter qualquer pra representar, mas pode ser outro
             father.setCount(a.getCount() + b.getCount());
             father.setLeft(a);
             father.setRight(b);
@@ -84,16 +85,16 @@ public class Compressor {
     }
 
     //método que gera e retorna um vetor de strings com os códigos
-    private String[] buildCodeTable(Node root){
+    String[] buildCodeTable(Node root){
         String codeTable[] = new String[256]; //tamanho de 256 pq é o limite da tabela ascii, mas desperdiça um pouco de memória
         buildCode(codeTable, root, "");
         return codeTable;
     }
 
     //método auxiliar pra gerar os códigos
-    private void buildCode(String table[], Node node, String s){
+    void buildCode(String table[], Node node, String s){
         if(node.isLeaf()){
-            table[node.getLetter()] = (char)node.getLetter() + " " + s;
+            table[node.getLetter()] = (char)node.getLetter() + "-." + s;
             return;
         }
         buildCode(table, node.getLeft(), s + '0');
@@ -103,12 +104,12 @@ public class Compressor {
     //retorna uma mapa com os valores letter e código do letter
     //OBS: esse método foi criado por orientação do professor no arquivo PDF, página 6, segundo parágrafo
     //OBS2: o método buildCodeTable funciona da mesma forma, mas esse deve ser mais conveniente pra gente
-    private HashMap<String, String> getCodeMap(String tabela[]){
+    HashMap<String, String> getCodeMap(String tabela[]){
         HashMap<String, String> map = new HashMap<>();
         for (String s : tabela) {
             if(s != null){
                 String aux[];
-                aux = s.split(" ", 2);
+                aux = s.split("-.", 2);
                 map.put(aux[0], aux[1]);
             }
         }
@@ -117,7 +118,7 @@ public class Compressor {
     }
 
     //método para armazenar a tabela de códigos num arquivo
-    private void storeCodeTable(String pathFile, HashMap<String, String> map) throws IOException {
+    void storeCodeTable(String pathFile, HashMap<String, String> map) throws IOException {
         FileWriter arquivo = new FileWriter(pathFile);
         PrintWriter salvarEmArquivo = new PrintWriter(arquivo);
 
@@ -130,7 +131,7 @@ public class Compressor {
     //função para gerar um arquivo binário com a sequencia de bits do texto codificado de um arquivo de texto
     //OBS: não foi usado a classe BitSet que o professor recomendou, então possivelmente podem existir erros nessa função
     //OBS2: tbm não foi usado o EOF que o professor recomenda colocar, então pode ser que tenha erros
-    private void storeCodeTextInFile(String inputFile, String outputFile, HashMap<String, String> map) throws IOException {
+    void storeCodeTextInFile(String inputFile, String outputFile, HashMap<String, String> map) throws IOException {
         //abre o arquivo de entrada, que contém os dados a serem lidos
         FileReader frInputFile = new FileReader(inputFile);
         BufferedReader brInputFile = new BufferedReader(frInputFile);
@@ -143,15 +144,29 @@ public class Compressor {
             String line = brInputFile.readLine();
             char characters[] = line.toCharArray();//transforma a linha lida do arquivo em um vetor de caracteres
             //percorre characters. Para cada letra no vetor, percorre o mapa inteiro e, se a letra for igual a uma das chaves do mapa, guarda o código da letra em arquivo binário
+            BitSet bitSet = new BitSet();
+            int count =0;
             for (char c : characters) {
                 for (String s : map.keySet()) {
                     if(c == s.charAt(0)){
-                        gravarEmArquivo.writeUTF(map.get(s));
+
+                        //TESTE PARA GERAÇÃO DE BYTES
+                        for (char i: map.get(s).toCharArray()){
+                            if (i == '0') {
+                                bitSet.set(count, false);
+                            }else{
+                                bitSet.set(count, true);
+                            }
+                            count++;
+                        }
+
+
+                        //gravarEmArquivo.writeBytes(map.get(s));
                     }
                 }
             }
+            //System.out.println(bitSet.toString());
         }
-
         arquivo.close();
         frInputFile.close();
         brInputFile.close();
@@ -167,7 +182,7 @@ public class Compressor {
         Heap minQueue = new Heap(mapCounter.size());
         minQueue = compressor.turnLettersInNodes(mapCounter);
 
-        Tree tree = new Tree(compressor.buildTreeCode(minQueue));
+        Tree tree = new Tree(compressor.buildTreeCode (minQueue));
 
         String table[] = compressor.buildCodeTable(tree.getRoot());
 
