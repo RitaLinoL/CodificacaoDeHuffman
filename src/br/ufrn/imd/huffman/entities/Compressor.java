@@ -22,7 +22,7 @@ public class Compressor {
         try {
             FileReader fr = new FileReader(this.pathFile);
             BufferedReader br = new BufferedReader(fr);
-            map.put("\n", 0);
+            //map.put("\n", 0); //O uso dessa instrução deixa a tabela gerada esquisita, o que faz causar erros na hora da leitura para a função extract
             while (br.ready()) {
                 String line = (String) br.readLine();
                 for (char letter: line.toCharArray()){
@@ -33,7 +33,7 @@ public class Compressor {
                         map.put(l, 1);
                     }
                 }
-                map.put("\n", map.get("\n") +1);
+                //map.put("\n", map.get("\n") +1);
             }
             br.close();
             fr.close();

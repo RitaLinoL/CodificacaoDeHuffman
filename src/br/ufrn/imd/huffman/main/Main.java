@@ -5,6 +5,7 @@ import br.ufrn.imd.huffman.dataStructure.binaryTree.Node;
 import br.ufrn.imd.huffman.dataStructure.binaryTree.Tree;
 import br.ufrn.imd.huffman.dataStructure.heap.Heap;
 import br.ufrn.imd.huffman.entities.Compressor;
+import br.ufrn.imd.huffman.entities.Extractor;
 
 import java.io.*;
 import java.util.HashMap;
@@ -44,6 +45,8 @@ public class Main {
             String fileTable = args[2];
             String fileOut = args[3];
         }
+
+
 
     }
 }
