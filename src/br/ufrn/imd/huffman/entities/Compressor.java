@@ -94,7 +94,7 @@ public class Compressor {
     //método auxiliar pra gerar os códigos
     void buildCode(String table[], Node node, String s){
         if(node.isLeaf()){
-            table[node.getLetter()] = (char)node.getLetter() + "-." + s;
+            table[node.getLetter()] = (char)node.getLetter() + s;
             return;
         }
         buildCode(table, node.getLeft(), s + '0');
@@ -108,9 +108,10 @@ public class Compressor {
         HashMap<String, String> map = new HashMap<>();
         for (String s : tabela) {
             if(s != null){
-                String aux[];
-                aux = s.split("-.", 2);
-                map.put(aux[0], aux[1]);
+                String key = "" + s.charAt(0);
+                String value = s.substring(1);
+                map.put(key, value);
+
             }
         }
 
@@ -161,7 +162,7 @@ public class Compressor {
                         }
 
 
-                        //gravarEmArquivo.writeBytes(map.get(s));
+                        gravarEmArquivo.writeBytes(map.get(s));
                     }
                 }
             }
