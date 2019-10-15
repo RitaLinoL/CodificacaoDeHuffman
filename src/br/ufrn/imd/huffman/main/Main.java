@@ -13,49 +13,14 @@ import java.util.Map;
 public class Main {
     //TODO implementar ordem de execução
 
-    public static void main(String args []) {
+    public static void main(String args []) throws IOException {
 
         String pathFile = args[1];
-        //String pathFile2 = "C:/Users/Lucimar/IdeaProjects/CodificacaoDeHuffman/tabelaDeSimbolos.edt";
+        //String codeTable = "C:/Users/Lucimar/IdeaProjects/CodificacaoDeHuffman/tabelaDeSimbolos.edt";
         //String outputFile = "C:/Users/Lucimar/IdeaProjects/CodificacaoDeHuffman/arquivoComprimido.edz";
-        Compressor compressor = new Compressor(pathFile);
-        HashMap<String, Integer> mapa = compressor.countLetter();
-        Heap fila = new Heap(mapa.size());
+        Compressor compressor = new Compressor();
+        //compressor.compress(pathFile, codeTable, outputFile);
 
-        //testando a função turnLettersInNode()
-        fila = compressor.turnLettersInNodes(mapa);
-
-        for (Node x: fila.getMinHeap()){
-            System.out.println(x.getLetter() + " - " + x.getCount());
-        }
-
-        //testando a função buildTreeCode
-        Tree arvore = new Tree(compressor.buildTreeCode(fila));
-
-        //arvore.getRoot().accessPreOrder(arvore.getRoot());
-
-        //testando a função buildCodeTable
-        String tabela[] = compressor.buildCodeTable(arvore.getRoot());
-
-//        for (String x : tabela) {
-//            if(x != null){
-//                System.out.println(x);
-//            }
-//
-//        }
-
-        //testando a funçao getCodeMap
-        /*
-        HashMap<String, String> mapaDeCodigo = compressor.getCodeMap(tabela);
-        for (String x : mapaDeCodigo.keySet()) {
-            System.out.println(x + mapaDeCodigo.get(x));
-        }*/
-
-        //testando a função storeCodeTable
-        //compressor.storeCodeTable(pathFile2, mapaDeCodigo);
-
-        //testando a função storeCodeTextInFile
-        //compressor.storeCodeTextInFile(pathFile, outputFile, mapaDeCodigo);
 
     }
 }

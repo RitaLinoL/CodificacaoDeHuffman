@@ -1,6 +1,7 @@
 package br.ufrn.imd.huffman.entities;
 
 import br.ufrn.imd.huffman.dataStructure.binaryTree.Node;
+import br.ufrn.imd.huffman.dataStructure.binaryTree.Tree;
 import br.ufrn.imd.huffman.dataStructure.heap.Heap;
 
 import java.io.*;
@@ -9,11 +10,13 @@ import java.util.HashMap;
 public class Compressor {
     private String pathFile;
 
+    public Compressor(){}
+
     public Compressor(String path){
         this.pathFile = path;
     }
 
-    public HashMap<String, Integer> countLetter(){
+    private HashMap<String, Integer> countLetter(){
         HashMap<String, Integer> map = new HashMap<>();
 
         try {
@@ -46,7 +49,7 @@ public class Compressor {
 
     //recebe um mapa para transformar os seus caracteres armazenados em nós
     //retorna uma minHeap com os nós adicionados
-    public Heap turnLettersInNodes(HashMap<String, Integer> map){
+    private Heap turnLettersInNodes(HashMap<String, Integer> map){
         Heap minHeap = new Heap(map.size());
         for (String x : map.keySet()) {
             int aux = x.charAt(0);//transformo de caracter para um valor na tabela ascii
@@ -61,7 +64,7 @@ public class Compressor {
 
     //funcao para gerar uma arvore a partir da minHeap
     //retorna um nó, o último que sobra na minHeap
-    public Node buildTreeCode(Heap minHeap){
+    private Node buildTreeCode(Heap minHeap){
         while(minHeap.getSize() > 1){
             Node a = minHeap.peek();
             minHeap.remove();
@@ -81,7 +84,7 @@ public class Compressor {
     }
 
     //método que gera e retorna um vetor de strings com os códigos
-    public String[] buildCodeTable(Node root){
+    private String[] buildCodeTable(Node root){
         String codeTable[] = new String[256]; //tamanho de 256 pq é o limite da tabela ascii, mas desperdiça um pouco de memória
         buildCode(codeTable, root, "");
         return codeTable;
@@ -100,7 +103,7 @@ public class Compressor {
     //retorna uma mapa com os valores letter e código do letter
     //OBS: esse método foi criado por orientação do professor no arquivo PDF, página 6, segundo parágrafo
     //OBS2: o método buildCodeTable funciona da mesma forma, mas esse deve ser mais conveniente pra gente
-    public HashMap<String, String> getCodeMap(String tabela[]){
+    private HashMap<String, String> getCodeMap(String tabela[]){
         HashMap<String, String> map = new HashMap<>();
         for (String s : tabela) {
             if(s != null){
@@ -114,7 +117,7 @@ public class Compressor {
     }
 
     //método para armazenar a tabela de códigos num arquivo
-    public void storeCodeTable(String pathFile, HashMap<String, String> map) throws IOException {
+    private void storeCodeTable(String pathFile, HashMap<String, String> map) throws IOException {
         FileWriter arquivo = new FileWriter(pathFile);
         PrintWriter salvarEmArquivo = new PrintWriter(arquivo);
 
@@ -128,7 +131,7 @@ public class Compressor {
     //função para gerar um arquivo binário com a sequencia de bits do texto codificado de um arquivo de texto
     //OBS: não foi usado a classe BitSet que o professor recomendou, então possivelmente podem existir erros nessa função
     //OBS2: tbm não foi usado o EOF que o professor recomenda colocar, então pode ser que tenha erros
-    public void storeCodeTextInFile(String inputFile, String outputFile, HashMap<String, String> map) throws IOException {
+    private void storeCodeTextInFile(String inputFile, String outputFile, HashMap<String, String> map) throws IOException {
         //abre o arquivo de entrada, que contém os dados a serem lidos
         FileReader frInputFile = new FileReader(inputFile);
         BufferedReader brInputFile = new BufferedReader(frInputFile);
@@ -155,7 +158,25 @@ public class Compressor {
         brInputFile.close();
     }
 
-    //TODO utilizar todas as funções anteriores para criar uma função Compress, simplificando o uso do programa
     //OBS: assim que essa função for criada, é interessante alterar a visibilidade das outras para private
+    //função que recebe um arquivo de texto para comprimir e gerar tabela de códigos
+    public void compress(String arqText, String arqEncoded, String codeTable) throws IOException {
+        Compressor compressor = new Compressor(arqText);
 
+        HashMap<String, Integer> mapCounter = compressor.countLetter();
+
+        Heap minQueue = new Heap(mapCounter.size());
+        minQueue = compressor.turnLettersInNodes(mapCounter);
+
+        Tree tree = new Tree(compressor.buildTreeCode(minQueue));
+
+        String table[] = compressor.buildCodeTable(tree.getRoot());
+
+        HashMap<String, String> codeMap = compressor.getCodeMap(table);
+
+        compressor.storeCodeTable(codeTable, codeMap);
+
+        compressor.storeCodeTextInFile(arqText, arqEncoded, codeMap);
+
+    }
 }
