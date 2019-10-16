@@ -124,7 +124,9 @@ public class Compressor {
         PrintWriter salvarEmArquivo = new PrintWriter(arquivo);
 
         for (String x : map.keySet()) {
-            salvarEmArquivo.println(x + map.get(x));
+
+                salvarEmArquivo.println(x + map.get(x));
+
         }
         arquivo.close();
     }
@@ -162,11 +164,13 @@ public class Compressor {
                         }
 
 
-                        gravarEmArquivo.writeBytes(map.get(s));
                     }
                 }
             }
-            //System.out.println(bitSet.toString());
+            arquivo.write(bitSet.toByteArray());
+
+            
+
         }
         arquivo.close();
         frInputFile.close();
