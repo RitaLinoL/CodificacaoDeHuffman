@@ -60,6 +60,10 @@ public class Main {
             String fileCompress = args[1];
             String fileTable = args[2];
             String fileOut = args[3];
+
+            Extractor extractor = new Extractor();
+
+            extractor.extract(fileCompress, fileTable, fileOut);
         }
 
 

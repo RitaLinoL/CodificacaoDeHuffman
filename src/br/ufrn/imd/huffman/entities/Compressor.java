@@ -169,7 +169,7 @@ public class Compressor {
             }
             arquivo.write(bitSet.toByteArray());
 
-            
+
 
         }
         arquivo.close();
