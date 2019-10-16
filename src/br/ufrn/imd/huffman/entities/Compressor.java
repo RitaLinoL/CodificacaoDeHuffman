@@ -51,7 +51,7 @@ public class Compressor {
     //recebe um mapa para transformar os seus caracteres armazenados em nós
     //retorna uma minHeap com os nós adicionados
     Heap turnLettersInNodes(HashMap<String, Integer> map){
-        Heap minHeap = new Heap(map.size());
+        Heap minHeap = new Heap(map.size() + 1);
         for (String x : map.keySet()) {
             int aux = x.charAt(0);//transformo de caracter para um valor na tabela ascii
 
@@ -59,6 +59,11 @@ public class Compressor {
             node.setCount(map.get(x));
             minHeap.addNode(node);
         }
+
+        //adição do nó que representará o EOF
+        Node eof = new Node(259);
+        eof.setCount(1);
+        minHeap.addNode(eof);
 
         return minHeap;
     }
@@ -86,7 +91,7 @@ public class Compressor {
 
     //método que gera e retorna um vetor de strings com os códigos
     String[] buildCodeTable(Node root){
-        String codeTable[] = new String[256]; //tamanho de 256 pq é o limite da tabela ascii, mas desperdiça um pouco de memória
+        String codeTable[] = new String[260]; //tamanho de 256 pq é o limite da tabela ascii, mas desperdiça um pouco de memória
         buildCode(codeTable, root, "");
         return codeTable;
     }
@@ -94,6 +99,12 @@ public class Compressor {
     //método auxiliar pra gerar os códigos
     void buildCode(String table[], Node node, String s){
         if(node.isLeaf()){
+            //Esse if faz com que o caracter EOF não seja mostrado no arquivo em que ficará a tabela
+            //no entanto, seu código em binãrio ainda é gerado e adicionado a um mapa
+            if(node.getLetter() == 259){
+                return;
+            }
+
             table[node.getLetter()] = (char)node.getLetter() + s;
             return;
         }
@@ -133,7 +144,7 @@ public class Compressor {
 
     //função para gerar um arquivo binário com a sequencia de bits do texto codificado de um arquivo de texto
     //OBS: não foi usado a classe BitSet que o professor recomendou, então possivelmente podem existir erros nessa função
-    //OBS2: tbm não foi usado o EOF que o professor recomenda colocar, então pode ser que tenha erros
+    //TODO adicionar o EOF ao código binário gerado
     void storeCodeTextInFile(String inputFile, String outputFile, HashMap<String, String> map) throws IOException {
         //abre o arquivo de entrada, que contém os dados a serem lidos
         FileReader frInputFile = new FileReader(inputFile);
