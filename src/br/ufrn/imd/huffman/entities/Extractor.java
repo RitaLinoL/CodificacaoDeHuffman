@@ -12,7 +12,6 @@ public class Extractor {
         HashMap<String, String> map = new HashMap<>();
 
         FileReader fr = new FileReader(codeTable);
-        //BufferedReader br = new BufferedReader(fr);
         while (fr.ready()){ //lendo o arquivo char a char para pegar o \n como
             String key =""+ (char) fr.read();
             String value="";
@@ -25,15 +24,7 @@ public class Extractor {
             map.put(key, value);
 
         }
-//        while(br.ready()){
-//            String line = br.readLine();
-//            String key = "" + line.charAt(0);
-//            System.out.println(key);
-//            String value = line.substring(1);
-//
-//        }
-//
-//        br.close();
+
         fr.close();
 
         return map;
@@ -61,9 +52,6 @@ public class Extractor {
             /*passar de byte para um bitset invertendo os bytes (ex: 00000001 = 1000000)
             porque na hora de escrever no arquivo é invertido*/
             index = 0;
-//            String str = "12901";
-//            String str2 = String.format("%8s", str).replace(' ', '0');
-//            System.out.println(str2);
 
             int index_bitSet =0;
             for (String byte_: binarios){

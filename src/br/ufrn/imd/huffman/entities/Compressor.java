@@ -31,24 +31,7 @@ public class Compressor {
                     map.put(l, 1);
                 }
             }
-//            BufferedReader br = new BufferedReader(fr);
-//            //map.put("\n", 0); //O uso dessa instrução deixa a tabela gerada esquisita, o que faz causar erros na hora da leitura para a função extract
-//            System.out.println();
-//            while (br.ready()) {
-//                String line = (String) br.readLine();
-//                for (char letter: line.toCharArray()){
-//                    String l =""+letter;
-//                    if (map.containsKey(l)){
-//                        map.put(l, map.get(l)+1);
-//                    }else{
-//                        map.put(l, 1);
-//                    }
-//                }
-//                //map.put("\n", map.get("\n") +1);
-//            }
-//
-//
-//            br.close();
+
             fr.close();
 
         } catch (FileNotFoundException e) {
@@ -113,11 +96,7 @@ public class Compressor {
         if(node.isLeaf()){
             //Esse if faz com que o caracter EOF seja mostrado no arquivo em que ficará a tabela
             //seu código em binário ainda é gerado e adicionado a um mapa
-            //ATENÇAO: PARA FAZER O 'A' COM BARQUINHO APARECER, DEIXE AS LINHAS 105 À 108 COMENTADAS :D
-//            if(node.getLetter() == 259){
-//                table[node.getLetter()] = "EOF" + s;
-//                return;
-//            }
+
 
             table[node.getLetter()] = (char)node.getLetter() + s;
             return;
@@ -166,7 +145,6 @@ public class Compressor {
 
         //abre um arquivo de saída de dados, o qual receberá bits
         FileOutputStream arquivo = new FileOutputStream(outputFile);
-        //DataOutputStream gravarEmArquivo = new DataOutputStream(arquivo);
 
         BitSet bitSet = new BitSet();
         int count =0;
