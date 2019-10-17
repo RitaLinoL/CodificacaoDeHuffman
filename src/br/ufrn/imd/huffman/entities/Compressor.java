@@ -101,9 +101,9 @@ public class Compressor {
         if(node.isLeaf()){
             //Esse if faz com que o caracter EOF não seja mostrado no arquivo em que ficará a tabela
             //no entanto, seu código em binãrio ainda é gerado e adicionado a um mapa
-            if(node.getLetter() == 259){
-                return;
-            }
+//            if(node.getLetter() == 259){
+//                return;
+//            }
 
             table[node.getLetter()] = (char)node.getLetter() + s;
             return;
