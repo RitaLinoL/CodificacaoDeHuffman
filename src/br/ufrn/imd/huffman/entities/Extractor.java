@@ -12,18 +12,28 @@ public class Extractor {
         HashMap<String, String> map = new HashMap<>();
 
         FileReader fr = new FileReader(codeTable);
-        BufferedReader br = new BufferedReader(fr);
+        //BufferedReader br = new BufferedReader(fr);
+        while (fr.ready()){ //lendo o arquivo char a char para pegar o \n como
+            String key =""+ (char) fr.read();
+            String value="";
+            String c =""+ (char) fr.read();
 
-        while(br.ready()){
-
-            String line = br.readLine();
-            String key = "" + line.charAt(0);
-            String value = line.substring(1);
-
+            do{
+                value +=c ;
+                c =""+ (char) fr.read();
+            }while(!(c.equals("\n")));
             map.put(key, value);
-        }
 
-        br.close();
+        }
+//        while(br.ready()){
+//            String line = br.readLine();
+//            String key = "" + line.charAt(0);
+//            System.out.println(key);
+//            String value = line.substring(1);
+//
+//        }
+//
+//        br.close();
         fr.close();
 
         return map;
@@ -115,6 +125,7 @@ public class Extractor {
                     if (key.equals("ă")) {
                         break;
                     }
+                    System.out.println(key);
                     text += key;
                     dataOutputStream.writeBytes(key);
                     letter_bit = "";
@@ -129,14 +140,16 @@ public class Extractor {
 
 
 
+
     public void extract(String encodedArq, String codeTable, String textArq) throws IOException {
 
         HashMap<String, String> mapTable = readTable(codeTable);
-/*
+
        for (String s : mapTable.keySet()){
-           System.out.println(s +" "+ mapTable.get(s));
+           System.out.print(s);
+           System.out.println(mapTable.get(s));
         }
-*/
+
         BitSet bitSet = readTextFile(encodedArq);
 
         System.out.println(decodeText(bitSet, mapTable, textArq));

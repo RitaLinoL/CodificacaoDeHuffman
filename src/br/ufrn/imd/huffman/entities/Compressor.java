@@ -22,21 +22,33 @@ public class Compressor {
 
         try {
             FileReader fr = new FileReader(this.pathFile);
-            BufferedReader br = new BufferedReader(fr);
-            //map.put("\n", 0); //O uso dessa instrução deixa a tabela gerada esquisita, o que faz causar erros na hora da leitura para a função extract
-            while (br.ready()) {
-                String line = (String) br.readLine();
-                for (char letter: line.toCharArray()){
-                    String l =""+letter;
-                    if (map.containsKey(l)){
-                        map.put(l, map.get(l)+1);
-                    }else{
-                        map.put(l, 1);
-                    }
+            while (fr.ready()){
+                char letter = (char) fr.read();
+                String l =""+letter;
+                if (map.containsKey(l)){
+                    map.put(l, map.get(l)+1);
+                }else{
+                    map.put(l, 1);
                 }
-                //map.put("\n", map.get("\n") +1);
             }
-            br.close();
+//            BufferedReader br = new BufferedReader(fr);
+//            //map.put("\n", 0); //O uso dessa instrução deixa a tabela gerada esquisita, o que faz causar erros na hora da leitura para a função extract
+//            System.out.println();
+//            while (br.ready()) {
+//                String line = (String) br.readLine();
+//                for (char letter: line.toCharArray()){
+//                    String l =""+letter;
+//                    if (map.containsKey(l)){
+//                        map.put(l, map.get(l)+1);
+//                    }else{
+//                        map.put(l, 1);
+//                    }
+//                }
+//                //map.put("\n", map.get("\n") +1);
+//            }
+//
+//
+//            br.close();
             fr.close();
 
         } catch (FileNotFoundException e) {
@@ -154,32 +166,30 @@ public class Compressor {
 
         //abre um arquivo de saída de dados, o qual receberá bits
         FileOutputStream arquivo = new FileOutputStream(outputFile);
-        DataOutputStream gravarEmArquivo = new DataOutputStream(arquivo);
+        //DataOutputStream gravarEmArquivo = new DataOutputStream(arquivo);
 
         BitSet bitSet = new BitSet();
         int count =0;
 
-        while(brInputFile.ready()){
-            String line = brInputFile.readLine();
-            char characters[] = line.toCharArray();//transforma a linha lida do arquivo em um vetor de caracteres
-            //percorre characters. Para cada letra no vetor, percorre o mapa inteiro e, se a letra for igual a uma das chaves do mapa, guarda o código da letra em arquivo binário
-            for (char c : characters) {
-                for (String s : map.keySet()) {
-                    if(c == s.charAt(0)){
-                        //TESTE PARA GERAÇÃO DE BYTES
-                        for (char i: map.get(s).toCharArray()){
-                            if (i == '0') {
-                                bitSet.set(count, false);
-                            }else{
-                                bitSet.set(count, true);
-                            }
-                            count++;
+        while(frInputFile.ready()){
+            char c = (char)frInputFile.read();
+            System.out.println((int)c);
+            for (String s : map.keySet()) {
+                if(c == s.charAt(0)){
+                    //TESTE PARA GERAÇÃO DE BYTES
+                    for (char i: map.get(s).toCharArray()){
+                        if (i == '0') {
+                            bitSet.set(count, false);
+                        }else{
+                            bitSet.set(count, true);
                         }
-
+                        count++;
                     }
+
                 }
             }
         }
+
         for (char c: map.get("ă").toCharArray()){
             if (c == '0') {
                 bitSet.set(count, false);
@@ -188,8 +198,6 @@ public class Compressor {
             }
             count++;
         }
-
-        bitSet.set(count, true);
 
         arquivo.write(bitSet.toByteArray());
 
