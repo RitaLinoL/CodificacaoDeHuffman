@@ -28,26 +28,48 @@ public class Extractor {
 
         return map;
     }
-
+    /**
+     * A função readTextFile ler os bytes do arquivo comprimido e os transforma em um bitset
+     * */
     private BitSet readTextFile(String encodedArq) {
         BitSet bitSet = new BitSet();
         File file = new File(encodedArq);
         InputStream inputstream;
         try {
+            //leitura dos binários
             inputstream = new FileInputStream(file);
             int index =0;
-            int bytes_int [] = new int[(int) file.length()];
+            String[] binarios = new String[(int)file.length()];//vetor que armazena cada byte
             int data = inputstream.read();
-
             while (data != -1) {
-                bytes_int[index ] = data;
-                for (char b: Integer.toBinaryString(data).toCharArray()){
-                    System.out.println(b);
-                }
+                binarios[index] = Integer.toBinaryString(data);
+                index++;
                 data = inputstream.read();
-
             }
             inputstream.close();
+
+            //passar de byte para um bitset invertendo os bytes (ex: 00000001 = 1000000) porque na hora de escrever no arquivo é invertido
+            index = 0;
+            int index_bitSet =0;
+            for (String byte_: binarios){
+
+                StringBuffer stringBuffer= new StringBuffer();
+                stringBuffer.append(byte_);
+                stringBuffer.reverse();
+
+                for(char bit : stringBuffer.toString().toCharArray()){
+                    if (bit =='1' ) {
+                        bitSet.set(index_bitSet, true);
+                    }else {
+                        bitSet.set(index_bitSet, false);
+                    }
+                    index_bitSet++;
+                }
+                if (stringBuffer.length() <8) {
+                    bitSet.set(index_bitSet, false);
+                    index_bitSet ++;
+                }
+            }
         } catch (FileNotFoundException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -55,45 +77,70 @@ public class Extractor {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-
         return bitSet;
     }
 
-    public byte[] getBytes(File file) {
-        int             len     = (int)file.length();
-        byte[]          sendBuf = new byte[len];
-        FileInputStream inFile  = null;
-        try {
-            inFile = new FileInputStream(file);
-            inFile.read(sendBuf, 0, len);
+    /**
+     * Função que a partir de um bitset e da tabela escreve no arquivo o conteudo comprimido
+     * */
+    String decodeText(BitSet bitSet, HashMap<String, String> table, String textArq) throws IOException {
+        String text = "";
+        String letter_bit = "";
+        char bit ='0';
 
-        } catch (FileNotFoundException fnfex) {
+        //abre um arquivo de saída de dados, o qual receberá bits
+        FileOutputStream fileOutputStream = new FileOutputStream(textArq);
+        DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
 
-        } catch (IOException ioex) {
+        for (int  i =0 ;i < bitSet.length() ; ++i){
+            if (bitSet.get(i)){
+                bit='1';
+            }else{
+                bit = '0';
+            }
 
+            letter_bit+=bit;
+
+            for (String key: table.keySet()){
+                if (letter_bit.equals(table.get(key))){//procura um codigo válido
+                    text+=key;
+                    dataOutputStream.writeChars(key);
+                    letter_bit="";
+                }
+            }
         }
-        return sendBuf;
-    }
+        dataOutputStream.close();
+        fileOutputStream.close();
 
+        return text;
+    }
 
 
 
     public void extract(String encodedArq, String codeTable, String textArq) throws IOException {
 
         HashMap<String, String> mapTable = readTable(codeTable);
-//
-//        for (String s : mapTable.keySet()){
-//            System.out.println(s +" "+ mapTable.get(s));
-//        }
-
-        BitSet bitSet = readTextFile(encodedArq);
-        byte [] b = getBytes(new File(encodedArq));
-        for (int  i =0 ;i < bitSet.length() ; ++i){
-            System.out.println(bitSet);
+/*
+       for (String s : mapTable.keySet()){
+           System.out.println(s +" "+ mapTable.get(s));
         }
+*/
+        BitSet bitSet = readTextFile(encodedArq);
 
+        System.out.println(decodeText(bitSet, mapTable, textArq));
 
+/*
+        for (int  i =0 ;i < bitSet.length() ; ++i){
+            if (bitSet.get(i)){
+
+            }else{
+                System.out.print("0");
+            }
+        }
+        System.out.println();
+        System.out.println(bitSet.length());
+
+*/
     }
 
 }
