@@ -48,13 +48,21 @@ public class Extractor {
             }
             inputstream.close();
 
-            //passar de byte para um bitset invertendo os bytes (ex: 00000001 = 1000000) porque na hora de escrever no arquivo é invertido
+            /*passar de byte para um bitset invertendo os bytes (ex: 00000001 = 1000000)
+            porque na hora de escrever no arquivo é invertido*/
             index = 0;
+//            String str = "12901";
+//            String str2 = String.format("%8s", str).replace(' ', '0');
+//            System.out.println(str2);
+
             int index_bitSet =0;
             for (String byte_: binarios){
-
+                String b = "";
+                for(int i= 8 - byte_.length(); i>0; --i){
+                    b+="0";
+                }
                 StringBuffer stringBuffer= new StringBuffer();
-                stringBuffer.append(byte_);
+                stringBuffer.append(b+byte_);
                 stringBuffer.reverse();
 
                 for(char bit : stringBuffer.toString().toCharArray()){
@@ -93,6 +101,7 @@ public class Extractor {
         DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
 
         for (int  i =0 ;i < bitSet.length() ; ++i){
+
             if (bitSet.get(i)){
                 bit='1';
             }else{
@@ -106,11 +115,9 @@ public class Extractor {
                     if (key.equals("ă")) {
                         break;
                     }
-
                     text += key;
-                    dataOutputStream.writeChars(key);
+                    dataOutputStream.writeBytes(key);
                     letter_bit = "";
-
                 }
             }
         }

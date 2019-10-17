@@ -156,16 +156,16 @@ public class Compressor {
         FileOutputStream arquivo = new FileOutputStream(outputFile);
         DataOutputStream gravarEmArquivo = new DataOutputStream(arquivo);
 
+        BitSet bitSet = new BitSet();
+        int count =0;
+
         while(brInputFile.ready()){
             String line = brInputFile.readLine();
             char characters[] = line.toCharArray();//transforma a linha lida do arquivo em um vetor de caracteres
             //percorre characters. Para cada letra no vetor, percorre o mapa inteiro e, se a letra for igual a uma das chaves do mapa, guarda o código da letra em arquivo binário
-            BitSet bitSet = new BitSet();
-            int count =0;
             for (char c : characters) {
                 for (String s : map.keySet()) {
                     if(c == s.charAt(0)){
-
                         //TESTE PARA GERAÇÃO DE BYTES
                         for (char i: map.get(s).toCharArray()){
                             if (i == '0') {
@@ -176,28 +176,24 @@ public class Compressor {
                             count++;
                         }
 
-
                     }
                 }
             }
-
-            for (char c: map.get("ă").toCharArray()){
-                if (c == '0') {
-                    bitSet.set(count, false);
-                }else{
-                    bitSet.set(count, true);
-                }
-                count++;
-            }
-
-            bitSet.set(count, true);
-
-
-            arquivo.write(bitSet.toByteArray());
-
-
-
         }
+        for (char c: map.get("ă").toCharArray()){
+            if (c == '0') {
+                bitSet.set(count, false);
+            }else{
+                bitSet.set(count, true);
+            }
+            count++;
+        }
+
+        bitSet.set(count, true);
+
+        arquivo.write(bitSet.toByteArray());
+
+
         arquivo.close();
         frInputFile.close();
         brInputFile.close();
