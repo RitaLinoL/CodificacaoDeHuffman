@@ -15,8 +15,8 @@ public class Extractor {
         BufferedReader br = new BufferedReader(fr);
 
         while(br.ready()){
-            String line = br.readLine();
 
+            String line = br.readLine();
             String key = "" + line.charAt(0);
             String value = line.substring(1);
 
@@ -32,8 +32,6 @@ public class Extractor {
     private BitSet readTextFile(String encodedArq) {
         BitSet bitSet = new BitSet();
         File file = new File(encodedArq);
-
-
         InputStream inputstream;
         try {
             inputstream = new FileInputStream(file);
@@ -43,7 +41,6 @@ public class Extractor {
 
             while (data != -1) {
                 bytes_int[index ] = data;
-                System.out.println( bytes_int[index ]);
                 for (char b: Integer.toBinaryString(data).toCharArray()){
                     System.out.println(b);
                 }
@@ -91,8 +88,6 @@ public class Extractor {
 //        }
 
         BitSet bitSet = readTextFile(encodedArq);
-
-
         byte [] b = getBytes(new File(encodedArq));
         for (int  i =0 ;i < bitSet.length() ; ++i){
             System.out.println(bitSet);
