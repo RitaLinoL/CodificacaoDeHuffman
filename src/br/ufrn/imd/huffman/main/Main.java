@@ -56,11 +56,23 @@ public class Main {
 //
 //
 //
+<<<<<<< HEAD
 //        }else if (option.equals("extract") ){
 //            String fileCompress = args[1];
 //            String fileTable = args[2];
 //            String fileOut = args[3];
 //        }
+=======
+        }else if (option.equals("extract") ){
+            String fileCompress = args[1];
+            String fileTable = args[2];
+            String fileOut = args[3];
+
+            Extractor extractor = new Extractor();
+
+            extractor.extract(fileCompress, fileTable, fileOut);
+        }
+>>>>>>> e69c73500651de040b3b5e266d4656b7b52c5b92
 
 
 
