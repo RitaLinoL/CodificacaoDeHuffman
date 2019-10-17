@@ -99,11 +99,13 @@ public class Compressor {
     //método auxiliar pra gerar os códigos
     void buildCode(String table[], Node node, String s){
         if(node.isLeaf()){
-            //Esse if faz com que o caracter EOF não seja mostrado no arquivo em que ficará a tabela
-            //no entanto, seu código em binãrio ainda é gerado e adicionado a um mapa
-//            if(node.getLetter() == 259){
-//                return;
-//            }
+            //Esse if faz com que o caracter EOF seja mostrado no arquivo em que ficará a tabela
+            //seu código em binário ainda é gerado e adicionado a um mapa
+            //ATENÇAO: PARA FAZER O 'A' COM BARQUINHO APARECER, DEIXE AS LINHAS 105 À 108 COMENTADAS :D
+            if(node.getLetter() == 259){
+                table[node.getLetter()] = "EOF" + s;
+                return;
+            }
 
             table[node.getLetter()] = (char)node.getLetter() + s;
             return;
