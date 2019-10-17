@@ -102,10 +102,10 @@ public class Compressor {
             //Esse if faz com que o caracter EOF seja mostrado no arquivo em que ficará a tabela
             //seu código em binário ainda é gerado e adicionado a um mapa
             //ATENÇAO: PARA FAZER O 'A' COM BARQUINHO APARECER, DEIXE AS LINHAS 105 À 108 COMENTADAS :D
-            if(node.getLetter() == 259){
-                table[node.getLetter()] = "EOF" + s;
-                return;
-            }
+//            if(node.getLetter() == 259){
+//                table[node.getLetter()] = "EOF" + s;
+//                return;
+//            }
 
             table[node.getLetter()] = (char)node.getLetter() + s;
             return;
@@ -180,6 +180,19 @@ public class Compressor {
                     }
                 }
             }
+
+            for (char c: map.get("ă").toCharArray()){
+                if (c == '0') {
+                    bitSet.set(count, false);
+                }else{
+                    bitSet.set(count, true);
+                }
+                count++;
+            }
+
+            bitSet.set(count, true);
+
+
             arquivo.write(bitSet.toByteArray());
 
 
