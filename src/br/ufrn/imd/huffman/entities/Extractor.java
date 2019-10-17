@@ -16,11 +16,11 @@ public class Extractor {
             String key =""+ (char) fr.read();
             String value="";
             String c =""+ (char) fr.read();
-
             do{
-                value +=c ;
+                value +=c;
                 c =""+ (char) fr.read();
-            }while(!(c.equals("\n")));
+            }while(!(c.equals("\n")) && ((int)c.charAt(0) < 260));
+
             map.put(key, value);
 
         }
@@ -96,7 +96,7 @@ public class Extractor {
 
         //abre um arquivo de saída de dados, o qual receberá bits
         FileOutputStream fileOutputStream = new FileOutputStream(textArq);
-        DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
 
         for (int  i =0 ;i < bitSet.length() ; ++i){
 
@@ -113,14 +113,13 @@ public class Extractor {
                     if (key.equals("ă")) {
                         break;
                     }
-                    System.out.println(key);
                     text += key;
-                    dataOutputStream.writeBytes(key);
+                    outputStreamWriter.write(key);
                     letter_bit = "";
                 }
             }
         }
-        dataOutputStream.close();
+        outputStreamWriter.close();
         fileOutputStream.close();
 
         return text;
@@ -133,27 +132,11 @@ public class Extractor {
 
         HashMap<String, String> mapTable = readTable(codeTable);
 
-       for (String s : mapTable.keySet()){
-           System.out.print(s);
-           System.out.println(mapTable.get(s));
-        }
 
         BitSet bitSet = readTextFile(encodedArq);
 
-        System.out.println(decodeText(bitSet, mapTable, textArq));
+       decodeText(bitSet, mapTable, textArq);
 
-/*
-        for (int  i =0 ;i < bitSet.length() ; ++i){
-            if (bitSet.get(i)){
-
-            }else{
-                System.out.print("0");
-            }
-        }
-        System.out.println();
-        System.out.println(bitSet.length());
-
-*/
     }
 
 }

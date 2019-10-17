@@ -40,21 +40,20 @@ public class Main {
 
 
 
-           //Relatório de compressão
-//            long lengthIn=1;
-//            long lengthOut=0;
-//
-//           File fIn = new File(fileIn);
-//           lengthIn = fIn.length();
-//
-//           File fOut = new File(fileCompress);
-//           lengthOut = fOut.length();
-//           System.out.println(lengthIn);
-//           System.out.println(lengthOut);
-//
-//           System.out.println("O arquivo está "+ (lengthOut * 100)/lengthIn+"% comprimido");
-//
-//
+          // Relatório de compressão
+            long lengthIn=1;
+            long lengthOut=0;
+
+           File fIn = new File(fileIn);
+           lengthIn = fIn.length();
+
+           File fOut = new File(fileCompress);
+           lengthOut = fOut.length();
+           if (lengthIn == 0){
+               lengthIn=1;
+           }
+
+           System.out.println("O arquivo está "+ (lengthOut * 100)/lengthIn+"% comprimido");
 
         }else if (option.equals("extract") ){
             String fileCompress = args[1];

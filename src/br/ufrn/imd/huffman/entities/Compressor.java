@@ -96,9 +96,10 @@ public class Compressor {
         if(node.isLeaf()){
             //Esse if faz com que o caracter EOF seja mostrado no arquivo em que ficará a tabela
             //seu código em binário ainda é gerado e adicionado a um mapa
+            if (node.getLetter() <= 259){
+                table[node.getLetter()] = (char)node.getLetter() + s;
+            }
 
-
-            table[node.getLetter()] = (char)node.getLetter() + s;
             return;
         }
         buildCode(table, node.getLeft(), s + '0');
@@ -151,7 +152,6 @@ public class Compressor {
 
         while(frInputFile.ready()){
             char c = (char)frInputFile.read();
-            System.out.println((int)c);
             for (String s : map.keySet()) {
                 if(c == s.charAt(0)){
                     //TESTE PARA GERAÇÃO DE BYTES
