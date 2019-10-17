@@ -102,10 +102,15 @@ public class Extractor {
             letter_bit+=bit;
 
             for (String key: table.keySet()){
-                if (letter_bit.equals(table.get(key))){//procura um codigo válido
-                    text+=key;
+                if (letter_bit.equals(table.get(key))) {//procura um codigo válido
+                    if (key.equals("ă")) {
+                        break;
+                    }
+
+                    text += key;
                     dataOutputStream.writeChars(key);
-                    letter_bit="";
+                    letter_bit = "";
+
                 }
             }
         }
