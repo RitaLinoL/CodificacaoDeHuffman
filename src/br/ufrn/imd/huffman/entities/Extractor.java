@@ -8,12 +8,12 @@ public class Extractor {
 
     //função para ler a tabela de um arquivo. Retorna um mapa<String, String>,
     //mas pode ser que precisemos mudar o tipo de retorno do mapa, dependendo de como avançarmos
-    HashMap<String, String> readTable(String codeTable) throws IOException {
-        HashMap<String, String> map = new HashMap<>();
-
+    HashMap<Integer, String> readTable(String codeTable) throws IOException {
+        HashMap<Integer, String> map = new HashMap<>();
         FileReader fr = new FileReader(codeTable);
         while (fr.ready()){ //lendo o arquivo char a char para pegar o \n como
-            String key =""+ (char) fr.read();
+            int k = fr.read();
+            String key =""+ (char) k;
             String value="";
             String c =""+ (char) fr.read();
             do{
@@ -21,7 +21,7 @@ public class Extractor {
                 c =""+ (char) fr.read();
             }while(!(c.equals("\n")) && ((int)c.charAt(0) < 260));
 
-            map.put(key, value);
+            map.put(k, value);
 
         }
 
@@ -89,7 +89,7 @@ public class Extractor {
     /**
      * Função que a partir de um bitset e da tabela escreve no arquivo o conteudo comprimido
      * */
-    String decodeText(BitSet bitSet, HashMap<String, String> table, String textArq) throws IOException {
+    String decodeText(BitSet bitSet, HashMap<Integer, String> table, String textArq) throws IOException {
         String text = "";
         String letter_bit = "";
         char bit ='0';
@@ -99,7 +99,6 @@ public class Extractor {
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
 
         for (int  i =0 ;i < bitSet.length() ; ++i){
-
             if (bitSet.get(i)){
                 bit='1';
             }else{
@@ -108,9 +107,10 @@ public class Extractor {
 
             letter_bit+=bit;
 
-            for (String key: table.keySet()){
+            for (Integer key: table.keySet()){
+
                 if (letter_bit.equals(table.get(key))) {//procura um codigo válido
-                    if (key.equals("ă")) {
+                    if (key.equals(259)) {
                         break;
                     }
                     text += key;
@@ -130,12 +130,12 @@ public class Extractor {
 
     public void extract(String encodedArq, String codeTable, String textArq) throws IOException {
 
-        HashMap<String, String> mapTable = readTable(codeTable);
+        HashMap<Integer, String> mapTable = readTable(codeTable);
 
 
         BitSet bitSet = readTextFile(encodedArq);
 
-       decodeText(bitSet, mapTable, textArq);
+        decodeText(bitSet, mapTable, textArq);
 
     }
 

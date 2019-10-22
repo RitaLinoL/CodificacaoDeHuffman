@@ -190,6 +190,7 @@ public class Compressor {
     public void compress(String arqText, String arqEncoded, String codeTable) throws IOException {
         Compressor compressor = new Compressor(arqText);
 
+
         HashMap<String, Integer> mapCounter = compressor.countLetter();
 
         Heap minQueue = new Heap(mapCounter.size());
