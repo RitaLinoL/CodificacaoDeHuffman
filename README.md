@@ -9,15 +9,15 @@ Projeto da disciplina de Estrutura de Dados Básicas II ministrada pelo professo
 
 ### Execução
 ```
-ainda nem comecei 
+java -jar ../out/artifacts/CodificacaoDeHuffman_jar/CodificacaoDeHuffman.jar compress 'path_file.txt' 'path_file.edz' 'path_file.edt'
 ```
 
 #### Tack list
 ##### Atividades iniciais e rascunho
 - [x] Leitura do Trabalho
 - [x] Leitura de arquivos em Java
-- [ ] Manipulação de arquivos binários 
-- [ ] Argumentos em linha de comando 
+- [x] Manipulação de arquivos binários 
+- [x] Argumentos em linha de comando 
 ###### Codificação de Huffman (passos):
 - [x] Contar frequência de utilização de caracteres
 - [x] Transformar os caracteres em nós e adicioná-los na heap
@@ -25,13 +25,13 @@ ainda nem comecei
 - [x] Criar uma tabela de Codificação
 - [x] Salvar tabela de códigos em arquivo de texto
 - [x] Codificar o texto e salvar em arquivo binario
-- [ ] Decodificar o texto
+- [x] Decodificar o texto
 
 
 ##### Implementação 
 - [x] Heap  
 - [x] Tree 
 - [x] Node
-- [ ] Compressor
-- [ ] Extractor
+- [x] Compressor
+- [x] Extractor
 
